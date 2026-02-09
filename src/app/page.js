@@ -27,7 +27,8 @@ import {
   Edit2,
   TrendingUp,
   History as HistoryIcon,
-  Minimize2
+  Minimize2,
+  Download
 } from "lucide-react";
 
 
@@ -132,6 +133,10 @@ export default function Home() {
   const [showCustomRevision, setShowCustomRevision] = useState(false);
   const [customFeedback, setCustomFeedback] = useState('');
   
+  // PWA states
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [showInstallHelp, setShowInstallHelp] = useState(false);
+  
   const textareaRef = useRef(null);
   const recognitionRef = useRef(null);
 
@@ -164,6 +169,48 @@ export default function Home() {
       window.removeEventListener("touchmove", handleTouchMove);
     };
   }, []);
+  
+  // PWA Install Event Listener
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      setDeferredPrompt(e);
+      console.log('PWA: beforeinstallprompt event fired');
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Check if it's iOS
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (isIOS && !isStandalone) {
+      setShowInstallHelp(true);
+    }
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      // If no prompt available, maybe show a manual help tooltip for iOS or other browsers
+      setToast("Buka menu browser dan pilih 'Add to Home Screen'");
+      return;
+    }
+    
+    // Show the install prompt
+    deferredPrompt.prompt();
+    
+    // Wait for the user to respond to the prompt
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`PWA: User response to the install prompt: ${outcome}`);
+    
+    // We've used the prompt, and can't use it again, throw it away
+    setDeferredPrompt(null);
+  };
 
   // Voice Recognition Setup
   useEffect(() => {
@@ -536,6 +583,22 @@ export default function Home() {
                 </span>
               )}
             </button>
+
+            {/* PWA Install Button (Manual) */}
+            {(deferredPrompt || showInstallHelp) && (
+              <button
+                onClick={handleInstallClick}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-700 text-white transition-colors border border-orange-500 shadow-sm"
+              >
+                <Download className="w-4 h-4" />
+                <span className="text-xs font-bold hidden sm:inline">
+                  Install App
+                </span>
+                <span className="text-xs font-bold sm:hidden">
+                  Install
+                </span>
+              </button>
+            )}
 
             {/* History Button */}
             <div className="relative">
