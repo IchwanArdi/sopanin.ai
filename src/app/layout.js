@@ -55,6 +55,11 @@ export const metadata = {
     statusBarStyle: "default",
     title: "Sopanin.ai",
   },
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export const viewport = {
