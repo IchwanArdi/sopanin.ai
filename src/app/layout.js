@@ -60,6 +60,9 @@ export const metadata = {
     shortcut: "/icon.png",
     apple: "/apple-touch-icon.png",
   },
+  verification: {
+    google: "0XZAjSQb2nurk4wT_NYsLnV8MUKFcm4MmPTqr0Vq4C0",
+  },
 };
 
 export const viewport = {
