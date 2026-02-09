@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sopanin.ai 💎
 
-## Getting Started
+> **Ubah Chat Kasar Jadi Sopan dalam 1 Klik.**
+> *Aisten Etika Komunikasi khusus budaya Indonesia.*
 
-First, run the development server:
+Sopanin.ai adalah aplikasi berbasis AI yang membantu Anda mentransformasi pesan chat yang kasar atau kasual menjadi pesan yang sopan, profesional, dan beretika. Didesain khusus untuk konteks budaya Indonesia—mulai dari chat ke Dosen, Atasan (Bos), Orang Tua, hingga Teman.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Fitur Utama
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🧠 **Smart Context Detection:** Otomatis mendeteksi waktu (pagi/siang/malam) dan hari (contoh: salam khusus hari Jumat) untuk memberikan salam yang paling relevan.
+- 📊 **Tone Indicator & Analysis:** Analisis tingkat kesopanan secara real-time dengan skor 1-5 dan feedback visual.
+- 🔄 **Advanced AI Revision:** Ingin hasil yang lebih singkat? atau lebih formal? Gunakan fitur revisi dengan preset sekali klik atau berikan feedback custom ke AI.
+- 📋 **Template & Management:** Simpan hasil transformasi favorit Anda sebagai template untuk digunakan kembali di masa depan.
+- 🎙️ **Voice Input:** Malas mengetik? Gunakan fitur rekam suara (Web Speech API) untuk input pesan.
+- 📱 **PWA & Mobile Ready:** Bisa diinstal sebagai aplikasi di HP (Home Screen) dengan UI yang sudah dioptimasi untuk swipe gesture.
+- 🚀 **AI Thinking UI:** Loader dinamis dengan efek shimmer dan pulsing dots yang memberikan kesan AI sedang "berpikir".
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework:** [Next.js 15+](https://nextjs.org/) (App Router)
+- **AI Engine:** [Google Gemini AI](https://ai.google.dev/) (`Gemma 3 27B`)
+- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
+- **Animations:** [Framer Motion](https://www.framer.com/motion/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Analytics:** [Vercel Analytics](https://vercel.com/analytics)
+- **Deployment:** [Vercel](https://vercel.com/)
 
-## Learn More
+## 🚀 Memulai
 
-To learn more about Next.js, take a look at the following resources:
+### Prasyarat
+- Node.js 18+
+- [Gemini API Key](https://aistudio.google.com/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Instalasi Lokal
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone repository:
+   ```bash
+   git clone https://github.com/username/sopanin-ai.git
+   cd sopanin-ai
+   ```
 
-## Deploy on Vercel
+2. Install dependensi:
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Setup environment variables:
+   Buat file `.env.local` di root folder dan tambahkan:
+   ```env
+   GEMINI_API_KEY=your_api_key_here
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Jalankan server development:
+   ```bash
+   npm run dev
+   ```
+
+5. Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
+
+## 📈 Analytics
+
+Projek ini menggunakan Vercel Analytics untuk memantau performa dan statistik pengunjung secara anonim dan aman.
+
+## 📄 Lisensi
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+*Dibuat dengan ❤️ untuk budaya Indonesia yang lebih beradab.*
