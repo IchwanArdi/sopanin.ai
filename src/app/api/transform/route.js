@@ -1,7 +1,7 @@
 // Using the CORRECT model names that actually exist!
 export async function POST(req) {
   try {
-    const { text, persona, timeOfDay, dayOfWeek, isWeekend, revisionFeedback, previousOutput } = await req.json();
+    const { text, persona, timeOfDay, dayOfWeek, revisionFeedback, previousOutput } = await req.json();
     
     if (!process.env.GEMINI_API_KEY) {
       throw new Error("GEMINI_API_KEY is not defined");
@@ -16,12 +16,12 @@ export async function POST(req) {
     };
 
     const greeting = greetingMap[timeOfDay] || "Selamat siang";
-    const isFriday = dayOfWeek === "Jumat";
-
+    const isWeekend = dayOfWeek === "Sabtu" || dayOfWeek === "Minggu";
+    
     // Persona guides with smart context
     const personaGuides = {
-      dosen: `Ubah ke Bahasa Indonesia yang sangat sopan untuk Dosen. Gunakan salam "${greeting}". Struktur: Salam, Sapaan Hormat (Bapak/Ibu), Identitas (Nama/NIM), Keperluan, Permohonan Maaf, dan Terimakasih.${isFriday ? ' Tambahkan "Selamat menunaikan ibadah Jumat" jika relevan.' : ''}`,
-      atasan: `Ubah ke Bahasa Indonesia profesional untuk Atasan/Bos. Gunakan salam "${greeting}". Singkat, padat, jelas, solutif.${isWeekend ? ' Boleh sedikit lebih santai karena akhir pekan.' : ''}`,
+      dosen: `Ubah ke Bahasa Indonesia yang sangat sopan untuk Dosen. Gunakan salam "${greeting}". JANGAN gunakan "Dengan Hormat". Gunakan struktur: (1) Salam, (2) Kalimat "Mohon maaf mengganggu waktunya...", (3) Identitas, (4) Keperluan, (5) Terimakasih. PENTING: Gunakan dua kali baris baru (baris kosong) di antara setiap bagian tersebut agar chat mudah dibaca (tidak menumpuk dalam satu paragraf).`,
+      atasan: `Ubah ke Bahasa Indonesia profesional untuk Atasan/Bos. Gunakan salam "${greeting}". JANGAN gunakan "Dengan Hormat". Gunakan struktur: (1) Salam, (2) Kalimat "Mohon maaf mengganggu waktunya...", (3) Keperluan singkat & solutif, (4) Terimakasih. PENTING: Gunakan dua kali baris baru (baris kosong) di antara setiap bagian tersebut agar chat mudah dibaca (tidak menumpuk dalam satu paragraf).`,
     };
 
     const guidance = personaGuides[persona] || `Ubah menjadi sangat sopan dan formal. Gunakan salam "${greeting}".`;

@@ -63,10 +63,11 @@ const SkeletonLoader = () => (
 );
 
 const QUICK_EXAMPLES = [
-  { text: "pak gue mau bimbingan besok bisa?", persona: "dosen" },
-  { text: "bu maaf gue telat ngumpulin tugas", persona: "dosen" },
-  { text: "bos gue sakit ga bisa masuk", persona: "atasan" },
-  { text: "pak minta izin pulang cepet", persona: "atasan" },
+  { text: "bu saya izin gak masuk kelas besok ya karena ada acara keluarga", persona: "dosen" },
+  { text: "pak izin lapor progress tugas saya udah setengah jalan", persona: "dosen" },
+  { text: "bos gue sakit ga bisa masuk hari ini mau ke dokter", persona: "atasan" },
+  { text: "pak minta izin pulang cepet ada urusan mendesak di rumah", persona: "atasan" },
+  { text: "bos ini update revisi desain kemaren ya mohon dicek", persona: "atasan" },
 ];
 
 // Toast Component
@@ -657,7 +658,7 @@ export default function Home() {
           <p className="text-xs sm:text-sm font-semibold text-zinc-600 dark:text-zinc-400 mb-3 text-center">
             💡 Coba contoh cepat:
           </p>
-          <div className="flex flex-nowrap md:flex-wrap md:justify-center gap-2 px-4 pb-2 overflow-x-auto no-scrollbar snap-x">
+          <div className="flex flex-nowrap md:flex-wrap md:justify-center gap-2 px-4 pb-2 overflow-x-auto no-scrollbar snap-x no-scrollbar">
             {QUICK_EXAMPLES.map((example, i) => (
               <button
                 key={i}
@@ -668,11 +669,11 @@ export default function Home() {
               </button>
             ))}
           </div>
-          {/* Mobile indicator - optional subtle hint */}
           <div className="md:hidden flex justify-center mt-1">
             <div className="w-12 h-1 bg-zinc-200 dark:bg-zinc-800 rounded-full opacity-30 animate-pulse" />
           </div>
         </div>
+
 
 
 
@@ -734,7 +735,7 @@ export default function Home() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ketik pesan kamu di sini..."
-              className="w-full h-32 sm:h-40 p-3 sm:p-4 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-orange-500 text-base"
+              className="w-full h-32 sm:h-40 p-3 sm:p-4 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl resize-none focus:outline-none focus:border-orange-500 transition-all text-base"
             />
             <div className="flex items-center justify-between mt-1">
               <p className="text-[10px] text-zinc-400">
@@ -913,7 +914,7 @@ export default function Home() {
                             value={customFeedback}
                             onChange={(e) => setCustomFeedback(e.target.value)}
                             placeholder="Contoh: tambahkan ucapan terima kasih di akhir"
-                            className="w-full px-3 py-2 text-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
+                            className="w-full px-3 py-2 text-sm bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-lg focus:outline-none transition-all focus:border-orange-500"
                             onKeyDown={(e) => {
                               if (e.key === 'Enter' && customFeedback.trim() && !isRevising) {
                                 handleRevision('custom');
@@ -1209,7 +1210,7 @@ export default function Home() {
                     value={tempName}
                     onChange={(e) => setTempName(e.target.value)}
                     placeholder="Contoh: Izin Sakit ke Dosen"
-                    className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all text-base"
+                    className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:border-orange-500 transition-all text-base"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') confirmSaveTemplate();
                     }}
