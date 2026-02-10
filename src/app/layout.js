@@ -18,10 +18,10 @@ export const metadata = {
     default: "Sopanin.ai - Ubah Chat Kasar Jadi Sopan dalam 1 Klik",
     template: "%s | Sopanin.ai"
   },
-  description: "Ubah chat kasar jadi sopan dalam 1 klik. Solusi etika chat Dosen, Bos, Ortu & Teman. Cepat, Gratis, & Beradab. Dibuat khusus untuk budaya Indonesia.",
+  description: "Ubah chat kasar jadi sopan dalam 1 klik. Solusi etika chat Dosen & Bos. Cepat, Gratis, & Beradab. Dibuat khusus untuk budaya Indonesia.",
   keywords: [
     "chat sopan", "template chat dosen", "etika chat bos", "bahasa indonesia sopan", 
-    "ai indonesia", "sopanin ai", "cara minta izin dosen", "chat ortu sopan",
+    "ai indonesia", "sopanin ai", "cara minta izin dosen",
     "professional communication", "indonesian etiquette"
   ],
   authors: [{ name: "Sopanin.ai Team" }],

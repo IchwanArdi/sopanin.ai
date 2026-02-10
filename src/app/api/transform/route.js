@@ -22,8 +22,6 @@ export async function POST(req) {
     const personaGuides = {
       dosen: `Ubah ke Bahasa Indonesia yang sangat sopan untuk Dosen. Gunakan salam "${greeting}". Struktur: Salam, Sapaan Hormat (Bapak/Ibu), Identitas (Nama/NIM), Keperluan, Permohonan Maaf, dan Terimakasih.${isFriday ? ' Tambahkan "Selamat menunaikan ibadah Jumat" jika relevan.' : ''}`,
       atasan: `Ubah ke Bahasa Indonesia profesional untuk Atasan/Bos. Gunakan salam "${greeting}". Singkat, padat, jelas, solutif.${isWeekend ? ' Boleh sedikit lebih santai karena akhir pekan.' : ''}`,
-      orangtua: `Ubah ke Bahasa Indonesia yang santun dan hangat untuk Orang Tua. Gunakan salam "${greeting}".`,
-      teman_diplomatik: `Ubah ke Bahasa Indonesia santai tapi tetap menjaga perasaan teman. Gunakan salam "${greeting}".`
     };
 
     const guidance = personaGuides[persona] || `Ubah menjadi sangat sopan dan formal. Gunakan salam "${greeting}".`;

@@ -130,12 +130,14 @@ export default function ParticleBackground() {
     const handleClick = (e) => {
       // Only create burst if clicking on non-interactive elements
       const target = e.target;
-      const isInteractive = target.tagName === 'BUTTON' || 
-                           target.tagName === 'INPUT' || 
-                           target.tagName === 'TEXTAREA' ||
-                           target.tagName === 'A' ||
-                           target.closest('button') ||
-                           target.closest('a');
+      const isInteractive = 
+        target.tagName === 'BUTTON' || 
+        target.tagName === 'INPUT' || 
+        target.tagName === 'TEXTAREA' ||
+        target.tagName === 'A' ||
+        target.closest('button') ||
+        target.closest('a') ||
+        target.closest('.z-10'); // EXCLUDE CONTENT LAYER
       
       if (isInteractive) return;
 

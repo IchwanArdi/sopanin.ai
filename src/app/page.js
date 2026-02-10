@@ -9,15 +9,11 @@ import {
   MessageCircle, 
   User, 
   Briefcase, 
-  Heart, 
-  Coffee,
   Sparkles,
   CheckCircle2,
   Clock,
   X,
   Trash2,
-  Mic,
-  MicOff,
   LayoutGrid,
   Calendar,
   Save,
@@ -36,8 +32,6 @@ import {
 const PERSONAS = [
   { id: "dosen", name: "Dosen", icon: User, example: "\"pak gue mau bimbingan\"" },
   { id: "atasan", name: "Bos", icon: Briefcase, example: "\"bos gue telat nih\"" },
-  { id: "orangtua", name: "Ortu", icon: Heart, example: "\"ma titip duit dong\"" },
-  { id: "teman_diplomatik", name: "Temen", icon: Coffee, example: "\"bro utang kapan balik?\"" },
 ];
 
 const SkeletonLoader = () => (
@@ -73,8 +67,6 @@ const QUICK_EXAMPLES = [
   { text: "bu maaf gue telat ngumpulin tugas", persona: "dosen" },
   { text: "bos gue sakit ga bisa masuk", persona: "atasan" },
   { text: "pak minta izin pulang cepet", persona: "atasan" },
-  { text: "ma kasih duit dong lagi bokek", persona: "orangtua" },
-  { text: "bro utang kemarin kapan balikin?", persona: "teman_diplomatik" },
 ];
 
 // Toast Component
@@ -109,7 +101,6 @@ export default function Home() {
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [showPersonaPicker, setShowPersonaPicker] = useState(false);
-  const [isListening, setIsListening] = useState(false);
   const [canShare, setCanShare] = useState(false);
   
   // Smart Context
@@ -132,13 +123,14 @@ export default function Home() {
   const [isRevising, setIsRevising] = useState(false);
   const [showCustomRevision, setShowCustomRevision] = useState(false);
   const [customFeedback, setCustomFeedback] = useState('');
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [tempName, setTempName] = useState("");
   
   // PWA states
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallHelp, setShowInstallHelp] = useState(false);
   
   const textareaRef = useRef(null);
-  const recognitionRef = useRef(null);
 
   // Initialize browser features
   useEffect(() => {
@@ -212,50 +204,6 @@ export default function Home() {
     setDeferredPrompt(null);
   };
 
-  // Voice Recognition Setup
-  useEffect(() => {
-    if (typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition)) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
-      recognitionRef.current.lang = "id-ID";
-
-      recognitionRef.current.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setInput(prev => (prev ? prev + " " + transcript : transcript));
-        setIsListening(false);
-        setToast("Suara berhasil direkam!");
-      };
-
-      recognitionRef.current.onerror = (event) => {
-        console.error("Speech recognition error:", event.error);
-        setIsListening(false);
-        setToast("Gagal merekam suara.");
-      };
-
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
-      };
-    }
-  }, []);
-
-  const toggleListening = () => {
-    if (!recognitionRef.current) {
-      setToast("Browser tidak mendukung rekam suara.");
-      return;
-    }
-
-    if (isListening) {
-      recognitionRef.current.stop();
-    } else {
-      setIsListening(true);
-      recognitionRef.current.start();
-      setToast("Silakan bicara...");
-    }
-    if (navigator.vibrate) navigator.vibrate(15);
-  };
-
   // Smart Context Detection
   const updateContextInfo = () => {
     const now = new Date();
@@ -312,13 +260,16 @@ export default function Home() {
   // Template Management
   const saveAsTemplate = () => {
     if (!input.trim() || !output.trim()) return;
-    
-    const templateName = prompt("Nama template (contoh: 'Izin Sakit ke Pak Budi'):");
-    if (!templateName) return;
+    setTempName(`Template - ${selectedPersona.name}`); // Default suggestion
+    setShowSaveModal(true);
+  };
+
+  const confirmSaveTemplate = () => {
+    if (!tempName.trim()) return;
     
     const newTemplate = {
       id: Date.now().toString(),
-      name: templateName,
+      name: tempName,
       text: input,
       persona: selectedPersona.id,
       usageCount: 0,
@@ -328,6 +279,8 @@ export default function Home() {
     setCustomTemplates(prev => [...prev, newTemplate]);
     setToast("Template berhasil disimpan!");
     if (navigator.vibrate) navigator.vibrate(10);
+    setShowSaveModal(false);
+    setTempName("");
   };
 
   const useCustomTemplate = (template) => {
@@ -731,18 +684,6 @@ export default function Home() {
               <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">
                 Ketik chat kamu:
               </label>
-              <button
-                onClick={toggleListening}
-                aria-label={isListening ? "Berhenti mendengarkan" : "Gunakan input suara"}
-                className={`flex items-center gap-1.5 px-3 py-1 scale-95 transition-all text-xs font-bold rounded-full border ${
-                  isListening 
-                  ? "bg-red-500 border-red-600 text-white animate-pulse" 
-                  : "bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400"
-                }`}
-              >
-                {isListening ? <MicOff className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
-                {isListening ? "Mendengarkan..." : "Pake Suara"}
-              </button>
             </div>
             
             {/* Context Badge & Tone Indicator */}
@@ -792,7 +733,7 @@ export default function Home() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ketik atau pakai suara..."
+              placeholder="Ketik pesan kamu di sini..."
               className="w-full h-32 sm:h-40 p-3 sm:p-4 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-orange-500 text-base"
             />
             <div className="flex items-center justify-between mt-1">
@@ -885,10 +826,6 @@ export default function Home() {
                     <Save className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">Simpan</span>
                   </button>
-                  <span className="text-xs text-green-600 flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" />
-                    Sopan ✓
-                  </span>
                 </div>
               )}
             </div>
@@ -1227,6 +1164,74 @@ export default function Home() {
                     })}
                 </div>
               )}
+            </motion.div>
+          </>
+        )}
+        {/* Save Template Modal */}
+        {showSaveModal && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowSaveModal(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[80] cursor-pointer"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-white dark:bg-zinc-900 rounded-3xl p-6 z-[90] border border-zinc-200 dark:border-zinc-800 shadow-2xl"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold flex items-center gap-2 text-zinc-900 dark:text-white">
+                  <Save className="w-5 h-5 text-orange-500" />
+                  Simpan Template
+                </h3>
+                <button onClick={() => setShowSaveModal(false)} className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+                Beri nama template ini agar mudah ditemukan nanti.
+              </p>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-1.5 ml-1">
+                    Nama Template
+                  </label>
+                  <input
+                    type="text"
+                    autoFocus
+                    value={tempName}
+                    onChange={(e) => setTempName(e.target.value)}
+                    placeholder="Contoh: Izin Sakit ke Dosen"
+                    className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all text-base"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') confirmSaveTemplate();
+                    }}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2 pt-2">
+                  <button
+                    onClick={confirmSaveTemplate}
+                    disabled={!tempName.trim()}
+                    className="w-full py-4 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold rounded-xl transition-all shadow-lg shadow-orange-500/20 active:scale-[0.98]"
+                  >
+                    Simpan Sekarang
+                  </button>
+                  <button
+                    onClick={() => setShowSaveModal(false)}
+                    className="w-full py-3 text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300 transition-colors"
+                  >
+                    Batal
+                  </button>
+                </div>
+              </div>
             </motion.div>
           </>
         )}
