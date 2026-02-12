@@ -296,12 +296,12 @@ export default function Home() {
         : t
     ));
     
-    setToast("Template dimuat!");
+    setToast("Template berhasil dimuat!");
   };
 
   const deleteTemplate = (templateId) => {
     setCustomTemplates(prev => prev.filter(t => t.id !== templateId));
-    setToast("Template dihapus!");
+    setToast("Template berhasil dihapus!");
   };
 
   // Load templates from localStorage
@@ -358,7 +358,7 @@ export default function Home() {
     setHistory([]);
     localStorage.removeItem("sopanin-history");
     setShowHistory(false);
-    setToast("Riwayat dihapus!");
+    setToast("Riwayat berhasil dihapus!");
   };
 
   const handleTransform = async () => {
@@ -448,13 +448,8 @@ export default function Home() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(output);
-    setToast("Tersalin ke clipboard!");
+    setToast("Teks berhasil disalin!");
     if (navigator.vibrate) navigator.vibrate(10);
-  };
-
-  const openWhatsApp = () => {
-    window.open(`https://wa.me/?text=${encodeURIComponent(output)}`, "_blank");
-    setToast("Dibuka di WhatsApp!");
   };
 
   const shareResult = async () => {
@@ -476,7 +471,7 @@ export default function Home() {
     setInput(example.text);
     const persona = PERSONAS.find(p => p.id === example.persona);
     if (persona) setSelectedPersona(persona);
-    setToast("Contoh dimuat!");
+    setToast("Contoh berhasil dimuat!");
   };
 
   const useHistoryItem = (item) => {
@@ -485,7 +480,7 @@ export default function Home() {
     const persona = PERSONAS.find(p => p.name === item.persona);
     if (persona) setSelectedPersona(persona);
     setShowHistory(false);
-    setToast("Riwayat dimuat!");
+    setToast("Riwayat berhasil dimuat!");
   };
 
   // Keyboard shortcut: Enter to submit
