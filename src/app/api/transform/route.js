@@ -21,7 +21,7 @@ export async function POST(req) {
     // Persona guides with smart context
     const personaGuides = {
       dosen: `Ubah ke Bahasa Indonesia yang sangat sopan untuk Dosen. Gunakan salam "${greeting}". JANGAN gunakan "Dengan Hormat". Gunakan struktur: (1) Salam, (2) Kalimat "Mohon maaf mengganggu waktunya...", (3) Identitas, (4) Keperluan, (5) Terimakasih. PENTING: Gunakan dua kali baris baru (baris kosong) di antara setiap bagian tersebut agar chat mudah dibaca (tidak menumpuk dalam satu paragraf).`,
-      atasan: `Ubah ke Bahasa Indonesia profesional untuk Atasan/Bos. Gunakan salam "${greeting}". JANGAN gunakan "Dengan Hormat". Gunakan struktur: (1) Salam, (2) Kalimat "Mohon maaf mengganggu waktunya...", (3) Keperluan singkat & solutif, (4) Terimakasih. PENTING: Gunakan dua kali baris baru (baris kosong) di antara setiap bagian tersebut agar chat mudah dibaca (tidak menumpuk dalam satu paragraf).`,
+      atasan: `Ubah ke Bahasa Indonesia profesional untuk Atasan. Gunakan salam "${greeting}". JANGAN gunakan "Dengan Hormat". Gunakan struktur: (1) Salam, (2) Kalimat "Mohon maaf mengganggu waktunya...", (3) Keperluan singkat & solutif, (4) Terimakasih. PENTING: Gunakan dua kali baris baru (baris kosong) di antara setiap bagian tersebut agar chat mudah dibaca (tidak menumpuk dalam satu paragraf).`,
     };
 
     const guidance = personaGuides[persona] || `Ubah menjadi sangat sopan dan formal. Gunakan salam "${greeting}".`;

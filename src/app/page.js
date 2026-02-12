@@ -31,7 +31,7 @@ import {
 
 const PERSONAS = [
   { id: "dosen", name: "Dosen", icon: User, example: "\"pak gue mau bimbingan\"" },
-  { id: "atasan", name: "Bos", icon: Briefcase, example: "\"bos gue telat nih\"" },
+  { id: "atasan", name: "Atasan", icon: Briefcase, example: "\"bos gue telat nih\"" },
 ];
 
 const SkeletonLoader = () => (
@@ -63,11 +63,11 @@ const SkeletonLoader = () => (
 );
 
 const QUICK_EXAMPLES = [
-  { text: "bu saya izin gak masuk kelas besok ya karena ada acara keluarga", persona: "dosen" },
-  { text: "pak izin lapor progress tugas saya udah setengah jalan", persona: "dosen" },
-  { text: "bos gue sakit ga bisa masuk hari ini mau ke dokter", persona: "atasan" },
-  { text: "pak minta izin pulang cepet ada urusan mendesak di rumah", persona: "atasan" },
-  { text: "bos ini update revisi desain kemaren ya mohon dicek", persona: "atasan" },
+  { text: "Bu, saya izin tidak bisa mengikuti kelas besok karena ada keperluan.", persona: "dosen" },
+  { text: "Pak, saya ingin melaporkan progres tugas yang sudah saya kerjakan.", persona: "dosen" },
+  { text: "Saya izin tidak dapat masuk kerja hari ini karena kondisi kesehatan.", persona: "atasan" },
+  { text: "Pak, saya mohon izin pulang lebih awal karena ada keperluan mendesak.", persona: "atasan" },
+  { text: "Berikut update revisi desain yang kemarin Bapak/Ibu minta.", persona: "atasan" },
 ];
 
 // Toast Component
@@ -516,7 +516,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-lg font-bold text-zinc-900 dark:text-white leading-none">Sopanin.ai</h1>
-              <p className="text-[10px] text-zinc-500 hidden sm:block">Chat kasar → Sopan</p>
+              <p className="text-[10px] text-zinc-500 hidden sm:block">Tulis jujur. Kirim profesional.</p>
             </div>
           </div>
           
@@ -627,7 +627,7 @@ export default function Home() {
             "name": "Sopanin.ai",
             "operatingSystem": "Web",
             "applicationCategory": "ProductivityApplication",
-            "description": "Ubah chat kasar jadi sopan dalam 1 klik. Solusi etika chat Dosen, Bos, Ortu & Teman.",
+            "description": "Tulis jujur. Kirim profesional. Solusi komunikasi profesional untuk Dosen dan Atasan.",
             "offers": {
               "@type": "Offer",
               "price": "0",
@@ -646,10 +646,10 @@ export default function Home() {
         {/* Hero */}
         <div className="text-center mb-6 md:mb-10 max-w-3xl mx-auto">
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-zinc-900 dark:text-white mb-3 md:mb-4 leading-tight px-2">
-            Ubah chat kamu jadi <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">sopan</span> dalam 1 klik
+            Tulis <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">jujur</span>. Kirim <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600">profesional</span>.
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-400 px-4">
-            Mau chat Dosen, Bos, atau Ortu tapi bingung gimana cara yang sopan? Biar AI yang urus.
+            Rapikan dan tingkatkan kualitas komunikasi tertulis sebelum dikirim.
           </p>
         </div>
 

@@ -15,12 +15,12 @@ const geistMono = Geist_Mono({
 export const metadata = {
   metadataBase: new URL("https://sopanin.vercel.app"),
   title: {
-    default: "Sopanin.ai - Ubah Chat Kasar Jadi Sopan dalam 1 Klik",
+    default: "Sopanin.ai - Tulis Jujur. Kirim Profesional.",
     template: "%s | Sopanin.ai"
   },
-  description: "Ubah chat kasar jadi sopan dalam 1 klik. Solusi etika chat Dosen & Bos. Cepat, Gratis, & Beradab. Dibuat khusus untuk budaya Indonesia.",
+  description: "Tulis jujur. Kirim profesional. Solusi komunikasi profesional untuk Dosen & Atasan. Cepat, Gratis, & Beradab. Dibuat khusus untuk budaya Indonesia.",
   keywords: [
-    "chat sopan", "template chat dosen", "etika chat bos", "bahasa indonesia sopan", 
+    "komunikasi profesional", "template chat dosen", "etika chat atasan", "bahasa indonesia sopan", 
     "ai indonesia", "sopanin ai", "cara minta izin dosen",
     "professional communication", "indonesian etiquette"
   ],
@@ -36,8 +36,8 @@ export const metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Sopanin.ai - Ubah Chat Kasar Jadi Sopan",
-    description: "Cepat, Gratis, & Beradab. Solusi transformasi chat untuk Dosen, Bos, dan Orang Tua.",
+    title: "Sopanin.ai - Tulis Jujur. Kirim Profesional.",
+    description: "Cepat, Gratis, & Beradab. Solusi transformasi chat untuk Dosen dan Atasan.",
     url: "https://sopanin.vercel.app",
     siteName: "Sopanin.ai",
     locale: "id_ID",
@@ -45,8 +45,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sopanin.ai - Ubah Chat Kasar Jadi Sopan",
-    description: "Ubah chat kasar jadi sopan dalam 1 klik. Khusus budaya Indonesia.",
+    title: "Sopanin.ai - Tulis Jujur. Kirim Profesional.",
+    description: "Tulis jujur. Kirim profesional. Khusus budaya Indonesia.",
     creator: "@sopanin_ai",
   },
   manifest: "/manifest.json",
