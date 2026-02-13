@@ -80,6 +80,18 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Site Name and URL for Search Engines */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Sopanin.ai",
+              "url": "https://sopanin.vercel.app"
+            })
+          }}
+        />
         {children}
         <Analytics />
       </body>
