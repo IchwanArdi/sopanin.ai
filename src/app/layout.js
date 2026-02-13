@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   metadataBase: new URL("https://sopanin.vercel.app"),
+  applicationName: "Sopanin.ai",
   title: {
     default: "Sopanin.ai - Tulis Jujur. Kirim Profesional.",
     template: "%s | Sopanin.ai"
