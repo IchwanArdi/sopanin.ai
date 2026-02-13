@@ -1,7 +1,7 @@
 {
   "name": "Sopanin.ai",
   "short_name": "Sopanin",
-  "description": "Ubah chat kasar jadi sopan dalam 1 klik - Solusi etika chat Dosen & Bos",
+  "description": "Tulis jujur. Kirim profesional. Solusi komunikasi profesional untuk Dosen & Atasan.",
   "start_url": "/",
   "id": "/",
   "scope": "/",
@@ -45,8 +45,8 @@
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Transform ke Bos",
-      "short_name": "Bos",
+      "name": "Transform ke Atasan",
+      "short_name": "Atasan",
       "description": "Transform pesan untuk atasan",
       "url": "/?persona=atasan",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
