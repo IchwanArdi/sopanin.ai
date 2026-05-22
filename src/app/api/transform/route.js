@@ -2,22 +2,22 @@
 export async function POST(req) {
   try {
     const { text, persona, timeOfDay, dayOfWeek, revisionFeedback, previousOutput } = await req.json();
-    
+
     if (!process.env.GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY is not defined");
+      throw new Error('GEMINI_API_KEY is not defined');
     }
 
     // Context-aware greeting mapping
     const greetingMap = {
-      pagi: "Selamat pagi",
-      siang: "Selamat siang", 
-      sore: "Selamat sore",
-      malam: "Selamat malam"
+      pagi: 'Selamat pagi',
+      siang: 'Selamat siang',
+      sore: 'Selamat sore',
+      malam: 'Selamat malam',
     };
 
-    const greeting = greetingMap[timeOfDay] || "Selamat siang";
-    const isWeekend = dayOfWeek === "Sabtu" || dayOfWeek === "Minggu";
-    
+    const greeting = greetingMap[timeOfDay] || 'Selamat siang';
+    const isWeekend = dayOfWeek === 'Sabtu' || dayOfWeek === 'Minggu';
+
     // Persona guides with smart context
     const personaGuides = {
       dosen: `Ubah ke Bahasa Indonesia yang sangat sopan untuk Dosen. Gunakan salam "${greeting}". JANGAN gunakan "Dengan Hormat". Gunakan struktur: (1) Salam, (2) Kalimat "Mohon maaf mengganggu waktunya...", (3) Identitas, (4) Keperluan, (5) Terimakasih. PENTING: Gunakan dua kali baris baru (baris kosong) di antara setiap bagian tersebut agar chat mudah dibaca (tidak menumpuk dalam satu paragraf).`,
@@ -25,10 +25,10 @@ export async function POST(req) {
     };
 
     const guidance = personaGuides[persona] || `Ubah menjadi sangat sopan dan formal. Gunakan salam "${greeting}".`;
-    
+
     // Build prompt based on whether this is a revision or new transformation
     let prompt;
-    
+
     if (revisionFeedback && previousOutput) {
       // REVISION MODE
       prompt = `Kamu adalah pakar etika komunikasi Indonesia. ${guidance}
@@ -59,29 +59,28 @@ PENTING: Berikan output dalam format JSON:
 Pesan: ${text}`;
     }
 
-    // Use gemma-3-27b-it (Maximum Quality - 14,400 RPD)
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent?key=${process.env.GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{ text: prompt }]
-          }]
-        })
-      }
-    );
+    // Use gemini-3.5 flash
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [{ text: prompt }],
+          },
+        ],
+      }),
+    });
 
     const data = await response.json();
-    
+
     if (data.error) {
       console.error('Gemini API Error:', data.error);
       throw new Error(data.error.message || 'API request failed');
     }
 
     const rawOutput = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tidak ada respon';
-    
+
     // Try to parse JSON response
     let output, tone;
     try {
@@ -96,14 +95,10 @@ Pesan: ${text}`;
 
     return new Response(JSON.stringify({ output, tone }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
-    console.error("Error:", error.message);
-    return new Response(
-      JSON.stringify({ error: error.message }), 
-      { status: 500 }
-    );
+    console.error('Error:', error.message);
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
   }
 }
